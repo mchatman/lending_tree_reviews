@@ -12,10 +12,12 @@ router = InferringRouter()
 class ReviewsListRouter:
     reviews_service = ReviewsService()
 
-    @router.get("/reviews/{business_url:path}", response_model=schemas.Reviews)
+    @router.get(
+        "/reviews/{business_url:path}", status_code=200, response_model=schemas.Reviews
+    )
     async def read_reviews(self, business_url: HttpUrl):
         """
         Retrieve all reviews.
         """
         reviews = await self.reviews_service.find_reviews(business_url)
-        return reviews
+        return reviews[0]
