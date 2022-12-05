@@ -1,3 +1,4 @@
+from typing import List
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 from pydantic import HttpUrl
@@ -13,11 +14,13 @@ class ReviewsListRouter:
     reviews_service = ReviewsService()
 
     @router.get(
-        "/reviews/{business_url:path}", status_code=200, response_model=schemas.Reviews
+        "/reviews/{business_url:path}",
+        status_code=200,
+        response_model=List[schemas.Reviews],
     )
     async def read_reviews(self, business_url: HttpUrl):
         """
         Retrieve all reviews.
         """
         reviews = await self.reviews_service.find_reviews(business_url)
-        return reviews[0]
+        return reviews
