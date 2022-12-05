@@ -11,7 +11,7 @@ class ReviewsService:
 
     async def find_reviews(self, business_url: HttpUrl):
         reviews = []
-        pages = await self.web_scraper_service.get_urls(business_url)
+        pages = await self.web_scraper_service.get_pages(business_url)
 
         for page in pages:
             reviews_elements = await self.web_scraper_service.find_page_elements(
